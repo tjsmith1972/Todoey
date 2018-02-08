@@ -11,6 +11,7 @@ import CoreData
 
 class TodoListViewController: UITableViewController {
 
+    @IBOutlet var searchBar: UISearchBar!
     //MARK: DECLARATIONS
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
@@ -23,7 +24,9 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        loadData()
+        
+        searchBar.delegate = self
+        loadData("")
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +69,11 @@ class TodoListViewController: UITableViewController {
     //MARK:  TABLEVIEW OVERRIDES
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        //itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
+        context.delete(itemArray[indexPath.row])
+        itemArray.remove(at: indexPath.row)
+        
         
         saveData()
         
@@ -101,14 +108,44 @@ class TodoListViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadData(){
+    func loadData(_ searchFor : String){
         let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        if searchFor != "" {
+            let predicate = NSPredicate(format: "title CONTAINS %@", searchFor)
+            request.predicate = predicate
+            let sortDesc = NSSortDescriptor(key: "title", ascending: true)
+            request.sortDescriptors = [sortDesc]
+        }
+        
         do{
             itemArray = try context.fetch(request)
         } catch {
             print(error)
         }
         
+        tableView.reloadData()
     }
+    
+    
 }
 
+extension TodoListViewController: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        loadData(searchBar.text!)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        loadData("")
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadData("")
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+}
