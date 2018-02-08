@@ -13,7 +13,7 @@ class TodoListViewController: UITableViewController {
     //MARK: DECLARATIONS
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
-    var itemArray = [TodoItem]()
+    var itemArray = [Item]()
     
     
     //MARK: VIEW EVENTS
@@ -37,8 +37,8 @@ class TodoListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             
-            let newItem = TodoItem()
-            newItem.Title = textField.text!
+            let newItem = Item()
+            newItem.title = textField.text!
             
             self.itemArray.append(newItem)
             
@@ -60,7 +60,7 @@ class TodoListViewController: UITableViewController {
     //MARK:  TABLEVIEW OVERRIDES
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        itemArray[indexPath.row].Done = !itemArray[indexPath.row].Done
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         saveData()
         
@@ -73,9 +73,9 @@ class TodoListViewController: UITableViewController {
         
         let item = itemArray[indexPath.row]
         
-        cell.textLabel?.text = item.Title
+        cell.textLabel?.text = item.title
         
-        cell .accessoryType = item.Done ? .checkmark : .none
+        cell .accessoryType = item.done ? .checkmark : .none
         
         return cell
     }
@@ -101,7 +101,7 @@ class TodoListViewController: UITableViewController {
         if let data = try? Data(contentsOf: dataFilePath!){
             let decoder = PropertyListDecoder()
             do {
-                itemArray = try decoder.decode([TodoItem].self, from: data)
+                itemArray = try decoder.decode([Item].self, from: data)
             } catch {
                 print(error)
             }
