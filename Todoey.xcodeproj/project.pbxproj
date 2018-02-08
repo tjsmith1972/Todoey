@@ -13,6 +13,7 @@
 		321FF9EB202C884200B24E54 /* Todoey.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 321FF9E9202C884200B24E54 /* Todoey.xcdatamodeld */; };
 		321FF9ED202C884200B24E54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 321FF9EC202C884200B24E54 /* Assets.xcassets */; };
 		321FF9F0202C884200B24E54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 321FF9EE202C884200B24E54 /* LaunchScreen.storyboard */; };
+		321FF9FE202CC1B500B24E54 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321FF9FD202CC1B500B24E54 /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		321FF9EC202C884200B24E54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		321FF9EF202C884200B24E54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		321FF9F1202C884200B24E54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		321FF9FD202CC1B500B24E54 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryViewController.swift; path = Todoey/Controllers/CategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		321FF9E1202C884100B24E54 /* Todoey */ = {
 			isa = PBXGroup;
 			children = (
+				321FF9E2202C884200B24E54 /* AppDelegate.swift */,
 				321FF9F1202C884200B24E54 /* Info.plist */,
 				321FF9F7202C8C9200B24E54 /* Models */,
 				321FF9F9202C8CBC00B24E54 /* Controllers */,
@@ -85,7 +88,7 @@
 		321FF9F9202C8CBC00B24E54 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				321FF9E2202C884200B24E54 /* AppDelegate.swift */,
+				321FF9FD202CC1B500B24E54 /* CategoryViewController.swift */,
 				321FF9E4202C884200B24E54 /* TodoListViewController.swift */,
 			);
 			path = Controllers;
@@ -171,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321FF9FE202CC1B500B24E54 /* CategoryViewController.swift in Sources */,
 				321FF9E5202C884200B24E54 /* TodoListViewController.swift in Sources */,
 				321FF9E3202C884200B24E54 /* AppDelegate.swift in Sources */,
 				321FF9EB202C884200B24E54 /* Todoey.xcdatamodeld in Sources */,
