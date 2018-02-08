@@ -7,16 +7,18 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UITableViewController {
 
     //MARK: DECLARATIONS
+    
+    let realm = try! Realm()
+    
     static var selectedCategory : Int = 0
     
-    var itemArray = [Category]()
+    var categories : Results<Category>?
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,21 +37,21 @@ class CategoryViewController: UITableViewController {
         let destinationVC = segue.destination as! TodoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow{
-            destinationVC.selectedCategory = itemArray[indexPath.row]
+            destinationVC.selectedCategory = categories?[indexPath.row]
         }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        let item = itemArray[indexPath.row]
+        let item = categories?[indexPath.row]
         
-        cell.textLabel?.text = item.name
+        cell.textLabel?.text = item?.name ?? "No categories added yet"
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return categories?.count ?? 1
     }
     
     @IBAction func addCategoryPressed(_ sender: UIBarButtonItem) {
@@ -60,12 +62,10 @@ class CategoryViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             
             
-            let newItem = Category(context: self.context)
+            let newItem = Category()
             newItem.name = textField.text!
             
-            self.itemArray.append(newItem)
-            
-            self.saveData()
+            self.saveData(category: newItem)
         }
         
         alert.addTextField { (alertTextField) in
@@ -79,9 +79,11 @@ class CategoryViewController: UITableViewController {
     }
     
     //MARK: UTILITY METHODS
-    func saveData(){
+    func saveData(category : Category){
         do {
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
             
         }catch{
             print(error)
@@ -90,21 +92,7 @@ class CategoryViewController: UITableViewController {
     }
     
     func loadData(_ searchFor : String){
-        let request : NSFetchRequest<Category> = Category.fetchRequest()
-        
-        if searchFor != "" {
-            let predicate = NSPredicate(format: "name CONTAINS %@", searchFor)
-            request.predicate = predicate
-            let sortDesc = NSSortDescriptor(key: "name", ascending: true)
-            request.sortDescriptors = [sortDesc]
-        }
-        
-        do{
-            itemArray = try context.fetch(request)
-        } catch {
-            print(error)
-        }
-        
+        categories = realm.objects(Category.self)
         tableView.reloadData()
     }
 }
