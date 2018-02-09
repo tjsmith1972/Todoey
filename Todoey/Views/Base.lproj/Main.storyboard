@@ -42,7 +42,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Items" id="esD-Hh-c5l">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="pog-QS-wvj">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addItemPressed:" destination="Xft-8w-DVO" id="Omg-7s-dIm"/>
                             </connections>
@@ -81,7 +80,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Todoey" id="rVC-P2-Tmw">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="eZq-jm-aBC">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addCategoryPressed:" destination="QE7-q6-3Tp" id="Nkm-PW-KjX"/>
                             </connections>
@@ -100,8 +98,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wZW-Kp-OtU" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="b6Z-bD-I4t">
-                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="b6Z-bD-I4t">
+                        <rect key="frame" x="0.0" y="20" width="320" height="93"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.20828542113304138" green="0.28433912992477417" blue="0.37640839815139771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">

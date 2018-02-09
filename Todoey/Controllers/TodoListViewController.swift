@@ -36,8 +36,36 @@ class TodoListViewController: SwipeTableViewController {
         loadData("")
         tableView.rowHeight = 80
         tableView.separatorStyle = .none
+        
+        
+        
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let colorHex = selectedCategory?.color{
+            
+            title = selectedCategory!.name
+            
+            guard let navBar = navigationController?.navigationBar else {
+                fatalError("Navigation Controller does not exist.")
+            }
+            
+            if let navColor = UIColor(hexString: colorHex) {
+                navBar.barTintColor = navColor
+                
+                navBar.tintColor = ContrastColorOf(navColor, returnFlat: true)
+                navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navColor, returnFlat: true)]
+                searchBar.barTintColor = navColor
+            }
+            
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let originalColor = FlatSkyBlue()
+        navigationController?.navigationBar.barTintColor = originalColor
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -109,7 +137,7 @@ class TodoListViewController: SwipeTableViewController {
             
                 //currently on row 5
                 //total of 10 items
-                CGFloat(indexPath.row) / CGFloat(todoItems!.count)
+                CGFloat(indexPath.row) / (CGFloat(todoItems!.count)*1.5)
             )
             cell.textLabel?.textColor = ContrastColorOf(cell.backgroundColor!, returnFlat: true)
             print("val: \(CGFloat(indexPath.row) / CGFloat(todoItems!.count))")
