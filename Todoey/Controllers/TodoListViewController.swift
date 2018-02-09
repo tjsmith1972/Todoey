@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
 
@@ -34,6 +35,7 @@ class TodoListViewController: SwipeTableViewController {
         //searchBar.delegate = self
         loadData("")
         tableView.rowHeight = 80
+        tableView.separatorStyle = .none
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,8 +104,15 @@ class TodoListViewController: SwipeTableViewController {
         
         if let item = todoItems?[indexPath.row]{
         
-        cell.textLabel?.text = item.title
-        
+            cell.textLabel?.text = item.title
+            cell.backgroundColor = UIColor(hexString: (selectedCategory?.color)!)?.darken(byPercentage:
+            
+                //currently on row 5
+                //total of 10 items
+                CGFloat(indexPath.row) / CGFloat(todoItems!.count)
+            )
+            cell.textLabel?.textColor = ContrastColorOf(cell.backgroundColor!, returnFlat: true)
+            print("val: \(CGFloat(indexPath.row) / CGFloat(todoItems!.count))")
         cell .accessoryType = item.done ? .checkmark : .none
         }else{
             cell.textLabel?.text = "no items yet"
