@@ -8,7 +8,7 @@
 
 import UIKit
 import SwipeCellKit
-
+//MARK: SUPERCLASS!!
 class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegate {
 
     override func viewDidLoad() {
